@@ -15,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
         // コードからFragmentを追加
 
         // Fragmentを作成します
-        MainFragment fragment = new MainFragment();
-        MainFragment fragment2 = new MainFragment();
+//        MainFragment fragment = new MainFragment();
+//        MainFragment fragment2 = new MainFragment();
         // Fragmentの追加や削除といった変更を行う際は、Transactionを利用します
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         // 新しく追加を行うのでaddを使用します
@@ -24,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
         // メソッドの1つ目の引数は対象のViewGroupのID、2つ目の引数は追加するfragment
         //transaction.add(R.id.container, fragment);        // 最後にcommitを使用することで変更を反映します
         //transaction.add(R.id.container, fragment2);        // 最後にcommitを使用することで変更を反映します
-        transaction.add(R.id.container, MainFragment.createInstance("上半分", Color.MAGENTA));
-        transaction.add(R.id.container, MainFragment.createInstance("下半分", Color.CYAN));
+//        transaction.add(R.id.container, MainFragment.createInstance("上半分", Color.MAGENTA));
+//        transaction.add(R.id.container, MainFragment.createInstance("下半分", Color.CYAN));
+        transaction.add(R.id.container, MainFormation.createInstance("下半分", Color.CYAN));
         transaction.commit();
     }
 }
