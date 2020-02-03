@@ -2,12 +2,9 @@ package com.example.fragmenttuto;
 
 
 import android.app.Dialog;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -21,9 +18,9 @@ import android.widget.TextView;
 import androidx.annotation.CheckResult;
 import androidx.annotation.ColorInt;
 import androidx.fragment.app.Fragment;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+import androidx.fragment.app.FragmentManager;
 
-public class MainFormation extends Fragment {
+public class FrgmFormation extends Fragment {
 
     private TextView mTextView;
     // このクラス内でだけ参照する値のため、BundleのKEYの値をprivateにする
@@ -32,10 +29,10 @@ public class MainFormation extends Fragment {
 
     // このメソッドからFragmentを作成することを強制する
     @CheckResult
-    public static MainFormation createInstance(String name, @ColorInt int color) {
+    public static FrgmFormation createInstance(String name, @ColorInt int color) {
         // Fragmentを作成して返すメソッド
         // createInstanceメソッドを使用することで、そのクラスを作成する際にどのような値が必要になるか制約を設けることができる
-        MainFormation fragment = new MainFormation();
+        FrgmFormation fragment = new FrgmFormation();
         // Fragmentに渡す値はBundleという型でやり取りする
         Bundle args = new Bundle();
         // Key/Pairの形で値をセットする
@@ -69,7 +66,8 @@ public class MainFormation extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         // 先ほどのレイアウトをここでViewとして作成します
-        View view = inflater.inflate(R.layout.formtion_main, container, false);
+        View view = inflater.inflate(R.layout.formtion_frgm, container, false);
+
         // レイアウトオブジェクトから拡大対象のImageViewを取得
         final ImageView tapView = view.findViewById(R.id.imageView1_1);
 
@@ -90,33 +88,59 @@ public class MainFormation extends Fragment {
                 layout.setLayoutParams(new LinearLayout.LayoutParams(
                                 LinearLayout.LayoutParams.MATCH_PARENT,
                                 LinearLayout.LayoutParams.MATCH_PARENT));
-//                ViewGroup.LayoutParams layoutParams  = layout.getLayoutParams();
-
-//                layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
-//                layoutParams.width= ViewGroup.LayoutParams.MATCH_PARENT;
                 layout.setBackgroundColor(Color.GREEN);
-
                 layout.addView(imageView);
-
-
-//                float factor =  width / bitmap.
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 // ダイアログを作成する
-//                Dialog dialog = new Dialog(MainActivity.this);
                 Dialog dialog = new Dialog(getContext());
                 // タイトルを非表示にする
                 dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
                 imageView.setColorFilter(Color.BLUE);
-//                dialog.setContentView(imageView);
                 dialog.setContentView(layout);
-//                dialog.getWindow().setLayout((int)(bitmap.getWidth()*factor), (int)(bitmap.getHeight()*factor));
                 dialog.getWindow().setLayout(width,height);
                 // ダイアログを表示する
                 dialog.show();
             }
         });
 
-//        return inflater.inflate(R.layout.formtion_main, container, false);
+        // タップでFragmentを１つ前に戻る
+        final ImageView keeper = view.findViewById(R.id.imageView4_1);
+
+        // 拡大対象のImageViewにタップ時のリスナーをセット
+        keeper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                if(fragmentManager != null) {
+                    fragmentManager.popBackStack();
+                }
+            }
+        });
+
+        mTextView = view.findViewById(R.id.messageTxt);
+
+        View.OnClickListener button1ClickListener = new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // ○○○
+                // TextViewをひも付けます
+//                mTextView = v.findViewById(R.id.messageTxt);
+
+                // □□□
+                mTextView.setText("AAAAAAA");
+            }
+        };
+        view.findViewById(R.id.imageView2_1).setOnClickListener(button1ClickListener);
+
+
+
+
+
+
+
+
+//        return inflater.inflate(R.layout.formtion_frgm, container, false);
         return view;
     }
 
@@ -124,20 +148,6 @@ public class MainFormation extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        // TextViewをひも付けます
-//        mTextView = (TextView) view.findViewById(R.id.textView);
-//        // Buttonのクリックした時の処理を書きます
-//        view.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mTextView.setText(mTextView.getText() + "!");
-//            }
-//        });
-//        // ラストに追加
-//        // 背景色をセットする
-//        view.setBackgroundColor(mBackgroundColor);
-//        // onCreateで受け取った値をセットする
-//        mTextView.setText(mName);
     }
 
 }

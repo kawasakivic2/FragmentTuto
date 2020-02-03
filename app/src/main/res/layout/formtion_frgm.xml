@@ -6,6 +6,13 @@
     android:background="#4CAF50"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/messageTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="メッセージエリア"
+        android:textSize="24sp" />
+
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
