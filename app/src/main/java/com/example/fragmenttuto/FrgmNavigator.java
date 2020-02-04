@@ -87,12 +87,13 @@ public class FrgmNavigator extends Fragment {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getFragmentManager();
 
+                mTextView.setText(mTextView.getText() + "#");
                 if (fragmentManager != null) {
                     FragmentTransaction fragmentFormation = fragmentManager.beginTransaction();
                     // BackStackを設定
                     fragmentFormation.addToBackStack(null);
 
-                    fragmentFormation.replace(R.id.container, FrgmFormation.createInstance("abc",Color.GRAY));
+                    fragmentFormation.replace(R.id.container, FrgmFormation.createInstance("フォーメーション",1));
                     fragmentFormation.commit();
                 }
             }

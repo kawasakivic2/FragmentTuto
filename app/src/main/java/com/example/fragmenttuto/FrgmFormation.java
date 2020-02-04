@@ -3,9 +3,12 @@ package com.example.fragmenttuto;
 
 import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,19 +20,24 @@ import android.widget.TextView;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.ColorInt;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import org.w3c.dom.Text;
 
 public class FrgmFormation extends Fragment {
 
     private TextView mTextView;
     // このクラス内でだけ参照する値のため、BundleのKEYの値をprivateにする
     private final static String KEY_NAME = "key_name";
-    private final static String KEY_BACKGROUND = "key_background_color";
+    private final static String KEY_OVERLAP = "key_overlap";
+    private Drawable drw = null;
 
     // このメソッドからFragmentを作成することを強制する
     @CheckResult
-    public static FrgmFormation createInstance(String name, @ColorInt int color) {
+    public static FrgmFormation createInstance(String name,  int overlap) {
         // Fragmentを作成して返すメソッド
         // createInstanceメソッドを使用することで、そのクラスを作成する際にどのような値が必要になるか制約を設けることができる
         FrgmFormation fragment = new FrgmFormation();
@@ -37,7 +45,7 @@ public class FrgmFormation extends Fragment {
         Bundle args = new Bundle();
         // Key/Pairの形で値をセットする
         args.putString(KEY_NAME, name);
-        args.putInt(KEY_BACKGROUND, color);
+        args.putInt(KEY_OVERLAP, overlap);
         // Fragmentに値をセットする
         fragment.setArguments(args);
         return fragment;
@@ -45,8 +53,9 @@ public class FrgmFormation extends Fragment {
     // 値をonCreateで受け取るため、新規で変数を作成する
     // 値がセットされなかった時のために初期値をセットする
     private String mName = "";
-    private @ColorInt
-    int mBackgroundColor = Color.TRANSPARENT;
+//    private @ColorInt
+//    int mBackgroundColor = Color.TRANSPARENT;
+    private int overlap;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +67,8 @@ public class FrgmFormation extends Fragment {
             // String型でNameの値を受け取る
             mName = args.getString(KEY_NAME);
             // int型で背景色を受け取る
-            mBackgroundColor = args.getInt(KEY_BACKGROUND, Color.TRANSPARENT);
+            overlap = args.getInt(KEY_OVERLAP);
+            mName = mName + " [ " + overlap + " ]";
         }
     }
     // Fragmentで表示するViewを作成するメソッド
@@ -67,6 +77,9 @@ public class FrgmFormation extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         // 先ほどのレイアウトをここでViewとして作成します
         View view = inflater.inflate(R.layout.formtion_frgm, container, false);
+
+        mTextView = view.findViewById(R.id.messageTxt);
+        mTextView.setText(mName);
 
         // レイアウトオブジェクトから拡大対象のImageViewを取得
         final ImageView tapView = view.findViewById(R.id.imageView1_1);
@@ -117,28 +130,56 @@ public class FrgmFormation extends Fragment {
             }
         });
 
-        mTextView = view.findViewById(R.id.messageTxt);
+
+        View.OnClickListener button1_3ClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // ○○○
+                // □□□
+                FragmentManager fragmentManager = getFragmentManager();
+                if (fragmentManager != null) {
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    // BackStackを設定
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.replace(R.id.container, FrgmFormation.createInstance("フォーメーション",overlap +1));
+                    fragmentTransaction.commit();
+                }
+            }
+        };
+        view.findViewById(R.id.imageView1_3).setOnClickListener(button1_3ClickListener);
+
+
 
         View.OnClickListener button1ClickListener = new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // ○○○
-                // TextViewをひも付けます
-//                mTextView = v.findViewById(R.id.messageTxt);
+//                (ImageView)v.setColorFilter(Color.BLACK);
+//                (ImageView)v.findViewById(R.id.imageView2_1).getDr
+//                final ImageView ttapView = v.findViewById(R.id.imageView2_1);
+//                ttapView.getDrawable().setTint(Color.RED);
+                ImageView imgv = (ImageView) v;
+                Drawable drw3 = imgv.getDrawable();
+                drw = imgv.getDrawable();
+//                drw.setTint(Color.LTGRAY);
+//                Log.d("DEBUG1",aaaaa.toString());
+               drw.setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+//                drw.setTint(Color.RED);
+//                drw.setTintMode(PorterDuff.Mode.SRC_IN);
+//                Log.d("DEBUG2",aaaaa.toString());
 
                 // □□□
-                mTextView.setText("AAAAAAA");
+//                mTextView.setText("ID:"+String.valueOf(v.getId()));
             }
         };
         view.findViewById(R.id.imageView2_1).setOnClickListener(button1ClickListener);
-
-
-
-
-
-
-
+        view.findViewById(R.id.imageView2_2).setOnClickListener(button1ClickListener);
+        view.findViewById(R.id.imageView2_3).setOnClickListener(button1ClickListener);
+        view.findViewById(R.id.imageView3_1).setOnClickListener(button1ClickListener);
+        view.findViewById(R.id.imageView3_2).setOnClickListener(button1ClickListener);
+        view.findViewById(R.id.imageView3_3).setOnClickListener(button1ClickListener);
+        view.findViewById(R.id.imageView3_4).setOnClickListener(button1ClickListener);
 
 //        return inflater.inflate(R.layout.formtion_frgm, container, false);
         return view;

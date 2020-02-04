@@ -19,6 +19,6 @@ public class FirstActivity extends AppCompatActivity {
         // 新しく追加を行うのでaddを使用します
         // 他にも、よく使う操作で、replace removeといったメソッドがあります
         // メソッドの1つ目の引数は対象のViewGroupのID、2つ目の引数は追加するfragment
-        transaction.add(R.id.container, FrgmNavigator.createInstance("下半分", Color.CYAN));
+        transaction.add(R.id.container, FrgmNavigator.createInstance("Navigation", Color.DKGRAY));
         transaction.commit();
     }}

@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         //transaction.add(R.id.container, fragment2);        // 最後にcommitを使用することで変更を反映します
 //        transaction.add(R.id.container, FrgmNavigator.createInstance("上半分", Color.MAGENTA));
 //        transaction.add(R.id.container, FrgmNavigator.createInstance("下半分", Color.CYAN));
-        transaction.add(R.id.container, FrgmFormation.createInstance("下半分", Color.CYAN));
+        transaction.add(R.id.container, FrgmFormation.createInstance("Navigation", Color.DKGRAY));
         transaction.commit();
     }
 }
